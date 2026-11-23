@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="uk" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Oleksii Kulish — Група підтримки</title>
+  <meta name="description" content="Закрита онлайн-група підтримки для чоловіків-іммігрантів. Психолог Олексій Куліш." />
+
+  <link rel="stylesheet" href="assets/css/styles.css" />
+
+  <script defer src="assets/js/content.js"></script>
+  <script defer src="assets/js/app.js"></script>
+  <script defer src="assets/js/alpine.min.js"></script>
+</head>
+
+<body
+  class="font-sans text-steel-100 antialiased"
+  x-data="landing()"
+  x-cloak
+  :lang="lang === 'uk' ? 'uk' : 'ru'"
+>
+  <!-- ========== HEADER ========== -->
+  <header class="fixed inset-x-0 top-0 z-50 border-b border-white/5 bg-graphite-950/80 backdrop-blur-md">
+    <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+      <a href="#top" class="shrink-0 text-sm font-semibold tracking-wide text-steel-100 sm:text-base">
+        Oleksii Kulish
+      </a>
+
+      <!-- Desktop nav -->
+      <nav class="hidden items-center gap-6 text-sm text-steel-300 lg:flex">
+        <a href="#pain" class="transition hover:text-steel-100" x-text="tx('navPain')"></a>
+        <a href="#about" class="transition hover:text-steel-100" x-text="tx('navAbout')"></a>
+        <a href="#benefits" class="transition hover:text-steel-100" x-text="tx('navBenefits')"></a>
+        <a href="#host" class="transition hover:text-steel-100" x-text="tx('navHost')"></a>
+        <a href="#details" class="transition hover:text-steel-100" x-text="tx('navDetails')"></a>
+        <a href="#faq" class="transition hover:text-steel-100">FAQ</a>
+        <a href="#contact" class="transition hover:text-steel-100" x-text="tx('navContact')"></a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <!-- Language toggle: text only, no flags -->
+        <div class="flex items-center gap-1 text-sm" role="group" aria-label="Language">
+          <button
+            type="button"
+            @click="lang = 'uk'"
+            class="rounded px-1.5 py-0.5 transition"
+            :class="lang === 'uk' ? 'font-semibold text-steel-100' : 'text-steel-400 hover:text-steel-200'"
+          >Ukr</button>
+          <span class="text-steel-500" aria-hidden="true">/</span>
+          <button
+            type="button"
+            @click="lang = 'ru'"
+            class="rounded px-1.5 py-0.5 transition"
+            :class="lang === 'ru' ? 'font-semibold text-steel-100' : 'text-steel-400 hover:text-steel-200'"
+          >Ru</button>
+        </div>
+
+        <!-- Mobile menu button -->
+        <button
+          type="button"
+          class="rounded-md border border-white/10 p-2 text-steel-200 lg:hidden"
+          @click="mobileOpen = !mobileOpen"
+          :aria-expanded="mobileOpen"
+          aria-controls="mobile-nav"
+        >
+          <span class="sr-only">Menu</span>
+          <svg x-show="!mobileOpen" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+          <svg x-show="mobileOpen" x-cloak class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile nav -->
+    <div
+      id="mobile-nav"
+      x-show="mobileOpen"
+      x-transition
+      class="border-t border-white/5 bg-graphite-950/95 px-4 py-4 lg:hidden"
+    >
+      <nav class="flex flex-col gap-3 text-sm text-steel-300">
+        <a href="#pain" @click="mobileOpen = false" x-text="tx('navPain')"></a>
+        <a href="#about" @click="mobileOpen = false" x-text="tx('navAbout')"></a>
+        <a href="#benefits" @click="mobileOpen = false" x-text="tx('navBenefits')"></a>
+        <a href="#host" @click="mobileOpen = false" x-text="tx('navHost')"></a>
+        <a href="#details" @click="mobileOpen = false" x-text="tx('navDetails')"></a>
+        <a href="#faq" @click="mobileOpen = false">FAQ</a>
+        <a href="#contact" @click="mobileOpen = false" x-text="tx('navContact')"></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- ========== HERO ========== -->
+    <section class="relative isolate flex min-h-[100dvh] flex-col justify-center overflow-hidden bg-[#0f172a] py-16 md:py-24">
+      <canvas
+        id="hero-canvas"
+        class="absolute inset-0 -z-10 h-full w-full"
+        aria-hidden="true"
+      ></canvas>
+
+      <div
+        class="pointer-events-none absolute inset-0 z-0 bg-gradient-to-b from-[#0f172a]/70 via-[#0f172a]/35 to-graphite-900"
+        aria-hidden="true"
+      ></div>
+
+      <div class="relative z-10 mx-auto w-full max-w-6xl px-4 text-center sm:px-6">
+        <div class="mx-auto w-full md:max-w-[50%] lg:max-w-[48%]">
+          <p
+            class="fade-up-load mb-4 text-xs font-medium uppercase tracking-[0.2em] text-accent-soft"
+            style="--load-delay: 100ms"
+            x-text="tx('heroEyebrow')"
+          ></p>
+          <h1
+            class="fade-up-load text-3xl font-semibold leading-tight tracking-tight text-steel-100 sm:text-4xl lg:text-[2.75rem] lg:leading-[1.15]"
+            style="--load-delay: 200ms"
+            x-text="tx('heroTitle')"
+          ></h1>
+          <p
+            class="fade-up-load mt-6 max-w-lg text-base leading-relaxed text-steel-300 sm:text-lg md:mx-auto"
+            style="--load-delay: 350ms"
+            x-text="tx('heroSub')"
+          ></p>
+          <div class="fade-up-load mt-10" style="--load-delay: 500ms">
+            <a
+              href="#contact"
+              class="inline-flex items-center justify-center rounded-md bg-accent px-6 py-3 text-sm font-semibold text-white transition hover:bg-accent-soft focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-soft focus-visible:ring-offset-2 focus-visible:ring-offset-graphite-900"
+              x-text="tx('heroCta')"
+            ></a>
+          </div>
+          <p
+            class="fade-up-load mt-6 text-sm text-steel-300"
+            style="--load-delay: 650ms"
+            x-text="tx('heroMeta')"
+          ></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== PAIN POINTS — editorial / brutalist stack ========== -->
+    <section id="pain" class="flex min-h-[100dvh] scroll-mt-24 flex-col justify-center bg-graphite-900 px-4 py-16 sm:px-6 md:py-24">
+      <div class="mx-auto w-full max-w-3xl">
+        <h2
+          class="reveal-element text-2xl font-semibold tracking-tight text-steel-100 sm:text-3xl"
+          x-text="tx('painTitle')"
+        ></h2>
+
+        <div class="mt-12 border-t border-slate-800">
+          <template x-for="(card, i) in tx('painCards')" :key="i">
+            <article
+              class="reveal-element relative overflow-hidden border-b border-slate-800 py-10 sm:py-12"
+              :style="`--reveal-delay: ${(i + 1) * 100}ms`"
+            >
+              <span
+                class="pointer-events-none absolute -left-1 top-1/2 -translate-y-1/2 select-none font-serif text-7xl font-bold leading-none text-slate-800 sm:text-8xl"
+                aria-hidden="true"
+                x-text="String(i + 1).padStart(2, '0')"
+              ></span>
+              <div class="relative z-10 max-w-xl pl-2 sm:pl-16">
+                <h3 class="text-xl font-semibold tracking-tight text-steel-100 sm:text-2xl" x-text="card.title"></h3>
+                <p class="mt-3 text-base leading-relaxed text-steel-300 sm:text-lg" x-text="card.text"></p>
+              </div>
+            </article>
+          </template>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== ABOUT THE PROJECT — asymmetric sticky ========== -->
+    <section id="about" class="flex min-h-[100dvh] scroll-mt-24 flex-col justify-center bg-graphite-900 px-4 py-16 sm:px-6 md:py-24">
+      <div class="mx-auto grid w-full max-w-6xl gap-12 lg:grid-cols-12 lg:items-start lg:gap-16">
+        <div class="reveal-element lg:sticky lg:top-32 lg:col-span-4">
+          <h2
+            class="text-2xl font-semibold tracking-tight text-steel-100 sm:text-3xl lg:text-[2rem] lg:leading-snug"
+            x-text="tx('aboutTitle')"
+          ></h2>
+          <p class="mt-4 max-w-md text-base leading-relaxed text-slate-400 sm:text-lg" x-text="tx('aboutLead')"></p>
+        </div>
+
+        <ul class="flex flex-col gap-12 sm:gap-16 lg:col-span-8">
+          <template x-for="(rule, i) in tx('aboutRules')" :key="i">
+            <li
+              class="reveal-element border-t border-slate-800 pt-8"
+              :style="`--reveal-delay: ${(i + 1) * 100}ms`"
+            >
+              <h3 class="text-xl font-semibold tracking-tight text-white sm:text-2xl" x-text="rule.title"></h3>
+              <p class="mt-3 max-w-xl text-base leading-relaxed text-slate-400 sm:text-lg" x-text="rule.text"></p>
+            </li>
+          </template>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ========== BENEFITS — typographic stairs + vertical canvas ========== -->
+    <section id="benefits" class="relative isolate flex min-h-[100dvh] scroll-mt-24 flex-col justify-center overflow-hidden bg-graphite-900 px-4 py-16 sm:px-6 md:py-24">
+      <canvas
+        id="benefits-canvas"
+        class="pointer-events-none absolute inset-0 z-0 h-full w-full"
+        aria-hidden="true"
+      ></canvas>
+
+      <!-- Soft readability veil (keeps lines visible) -->
+      <div
+        class="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-graphite-900/50 via-graphite-900/20 to-transparent"
+        aria-hidden="true"
+      ></div>
+
+      <!-- Seamless blend into surrounding graphite-900 sections -->
+      <div
+        class="pointer-events-none absolute inset-x-0 top-0 z-[1] h-28 bg-gradient-to-b from-graphite-900 via-graphite-900/80 to-transparent sm:h-40"
+        aria-hidden="true"
+      ></div>
+      <div
+        class="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-28 bg-gradient-to-t from-graphite-900 via-graphite-900/80 to-transparent sm:h-40"
+        aria-hidden="true"
+      ></div>
+
+      <div class="relative z-10 mx-auto w-full max-w-5xl">
+        <p
+          class="reveal-element mb-10 text-xs font-medium uppercase tracking-[0.22em] text-slate-500"
+          x-text="tx('benefitsTitle')"
+        ></p>
+
+        <ul class="flex flex-col gap-8 md:gap-12">
+          <template x-for="(item, i) in tx('benefitsList')" :key="i">
+            <li
+              class="reveal-element text-2xl font-light tracking-wide text-white md:text-4xl"
+              :class="[
+                i === 0 ? 'ml-0' : '',
+                i === 1 ? 'ml-4 md:ml-24' : '',
+                i === 2 ? 'ml-8 md:ml-48' : '',
+                i === 3 ? 'ml-12 md:ml-72' : '',
+              ]"
+              :style="`--reveal-delay: ${(i + 1) * 100}ms`"
+              x-text="item"
+            ></li>
+          </template>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ========== ABOUT ME / HOST ========== -->
+    <section id="host" class="flex min-h-[100dvh] scroll-mt-24 flex-col justify-center bg-graphite-900 px-4 py-16 sm:px-6 md:py-24">
+      <div class="mx-auto grid w-full max-w-5xl grid-cols-1 items-center gap-12 md:grid-cols-2 md:gap-20">
+        <!-- Portrait -->
+        <div class="reveal-element overflow-hidden rounded-2xl border border-slate-800 shadow-2xl shadow-black/50">
+          <img
+            src="assets/img/me.jpg"
+            alt="Oleksii Kulish"
+            class="aspect-[3/4] w-full object-cover"
+            width="600"
+            height="800"
+          />
+        </div>
+
+        <!-- Text -->
+        <div class="flex flex-col justify-center">
+          <p
+            class="reveal-element mb-4 text-sm uppercase tracking-widest text-slate-500"
+            x-text="tx('hostLabel')"
+          ></p>
+          <h2
+            class="reveal-element mb-2 text-4xl font-light text-white md:text-5xl"
+            style="--reveal-delay: 100ms"
+          >Олексій Куліш</h2>
+          <p
+            class="reveal-element mb-8 text-xl text-slate-400"
+            style="--reveal-delay: 200ms"
+            x-text="tx('hostRole')"
+          ></p>
+          <p
+            class="reveal-element text-lg leading-relaxed text-slate-300"
+            style="--reveal-delay: 300ms"
+            x-text="tx('hostText')"
+          ></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== DETAILS & CONDITIONS — modern brutalism ========== -->
+    <section id="details" class="flex min-h-[100dvh] scroll-mt-24 flex-col justify-center bg-graphite-900 px-4 py-16 sm:px-6 md:py-24">
+      <div class="mx-auto w-full max-w-5xl">
+        <h2
+          class="reveal-element mb-12 text-3xl font-light text-white md:text-5xl"
+          x-text="tx('detailsTitle')"
+        ></h2>
+
+        <div class="grid grid-cols-1 gap-x-16 gap-y-10 md:grid-cols-2">
+          <template x-for="(card, i) in tx('detailsCards')" :key="i">
+            <div
+              class="reveal-element border-l-4 border-slate-600 py-1 pl-5 md:pl-8"
+              :class="card.wide ? 'md:col-span-2' : ''"
+              :style="`--reveal-delay: ${(i + 1) * 100}ms`"
+            >
+              <span
+                class="mb-2 block text-xs uppercase tracking-[0.2em] text-slate-500 md:text-sm"
+                x-text="card.label"
+              ></span>
+              <p
+                class="font-light leading-snug text-slate-200"
+                :class="card.wide ? 'text-2xl text-white md:text-3xl' : 'text-xl md:text-2xl'"
+                x-text="card.value"
+              ></p>
+            </div>
+          </template>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== FAQ — asymmetric right-sticky title ========== -->
+    <section id="faq" class="flex min-h-[100dvh] scroll-mt-24 flex-col justify-center bg-graphite-900 px-4 py-16 sm:px-6 md:py-24">
+      <div class="mx-auto grid w-full max-w-6xl grid-cols-1 gap-12 md:grid-cols-12 md:gap-16 md:items-start">
+        <!-- Q&A (left on desktop, below title on mobile) -->
+        <div class="order-2 flex flex-col gap-12 md:order-1 md:col-span-8 md:gap-16">
+          <template x-for="(item, i) in tx('faqItems')" :key="i">
+            <div
+              class="reveal-element"
+              :style="`--reveal-delay: ${(i + 1) * 100}ms`"
+            >
+              <h3
+                class="mb-4 block text-xl font-medium text-white md:text-2xl"
+                x-text="item.q"
+              ></h3>
+              <p
+                class="text-base leading-relaxed text-slate-500"
+                x-text="item.a"
+              ></p>
+            </div>
+          </template>
+        </div>
+
+        <!-- Sticky title (right on desktop, top on mobile) -->
+        <div class="reveal-element order-1 h-fit md:sticky md:top-32 md:order-2 md:col-span-4">
+          <h2
+            class="text-4xl font-light text-white md:text-5xl"
+            x-text="tx('faqTitle')"
+          ></h2>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== CONTACT / CTA — editorial text links ========== -->
+    <section id="contact" class="flex min-h-[100dvh] scroll-mt-24 flex-col justify-center bg-graphite-900 py-16 md:py-24">
+      <div class="mx-auto w-full max-w-4xl px-6">
+        <header class="reveal-element mb-16 max-w-2xl">
+          <h2
+            class="mb-6 text-3xl font-light text-white md:text-5xl"
+            x-text="tx('contactTitle')"
+          ></h2>
+          <p
+            class="text-lg text-slate-400 md:text-xl"
+            x-text="tx('contactText')"
+          ></p>
+        </header>
+
+        <nav class="border-t border-slate-800" aria-label="Contact">
+          <a
+            :href="'mailto:' + contact.email"
+            class="reveal-element group flex w-full items-center justify-between border-b border-slate-800 py-8 md:py-10"
+            style="--reveal-delay: 100ms"
+          >
+            <span
+              class="text-4xl font-light text-slate-500 transition-colors duration-500 group-hover:text-white md:text-6xl"
+              x-text="tx('btnEmail')"
+            ></span>
+            <span class="text-3xl text-slate-500 transition-colors duration-500 group-hover:text-white md:text-5xl" aria-hidden="true">↗</span>
+          </a>
+
+          <a
+            :href="contact.telegram"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="reveal-element group flex w-full items-center justify-between border-b border-slate-800 py-8 md:py-10"
+            style="--reveal-delay: 200ms"
+          >
+            <span
+              class="text-4xl font-light text-slate-500 transition-colors duration-500 group-hover:text-white md:text-6xl"
+              x-text="tx('btnTelegram')"
+            ></span>
+            <span class="text-3xl text-slate-500 transition-colors duration-500 group-hover:text-white md:text-5xl" aria-hidden="true">↗</span>
+          </a>
+
+          <a
+            :href="contact.whatsapp"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="reveal-element group flex w-full items-center justify-between border-b border-slate-800 py-8 md:py-10"
+            style="--reveal-delay: 300ms"
+          >
+            <span
+              class="text-4xl font-light text-slate-500 transition-colors duration-500 group-hover:text-white md:text-6xl"
+              x-text="tx('btnWhatsapp')"
+            ></span>
+            <span class="text-3xl text-slate-500 transition-colors duration-500 group-hover:text-white md:text-5xl" aria-hidden="true">↗</span>
+          </a>
+        </nav>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="border-t border-white/5 px-4 py-8 sm:px-6">
+    <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 text-center text-xs text-steel-400 sm:flex-row sm:text-left">
+      <p>© <span x-text="new Date().getFullYear()"></span> Oleksii Kulish</p>
+      <p x-text="tx('footerNote')"></p>
+    </div>
+  </footer>
+
+  <script src="assets/js/hero-canvas.js"></script>
+  <script src="assets/js/benefits-canvas.js"></script>
+  <script src="assets/js/reveal.js"></script>
+</body>
+</html>
