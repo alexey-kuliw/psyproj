@@ -207,4 +207,191 @@
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
   }
+
+  /* About — architectural grid + breathing glow */
+  .about-structure {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 20%,
+      black 80%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 20%,
+      black 80%,
+      transparent 100%
+    );
+  }
+
+  .about-structure__grid {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .about-structure__glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    transform: translate3d(0, 0, 0);
+    opacity: 0.85;
+  }
+
+  .about-structure__glow--a {
+    top: 12%;
+    left: 8%;
+    width: min(72vw, 700px);
+    height: min(72vw, 700px);
+    background: radial-gradient(
+      circle,
+      rgba(148, 163, 184, 0.09) 0%,
+      transparent 68%
+    );
+  }
+
+  .about-structure__glow--b {
+    bottom: 6%;
+    right: 4%;
+    width: min(68vw, 640px);
+    height: min(68vw, 640px);
+    background: radial-gradient(
+      circle,
+      rgba(36, 43, 53, 0.16) 0%,
+      transparent 70%
+    );
+  }
+
+  /* Host — soft monochrome fog (breathing ambient blobs) */
+  .host-fog {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 18%,
+      black 82%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black 18%,
+      black 82%,
+      transparent 100%
+    );
+  }
+
+  .host-fog__blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+    transform: translate3d(0, 0, 0);
+  }
+
+  .host-fog__blob--a {
+    top: 8%;
+    left: -8%;
+    width: min(58vw, 520px);
+    height: min(58vw, 520px);
+    background: rgba(148, 163, 184, 0.14);
+  }
+
+  .host-fog__blob--b {
+    top: 28%;
+    right: -12%;
+    width: min(64vw, 580px);
+    height: min(64vw, 580px);
+    background: rgba(21, 32, 51, 0.18);
+    filter: blur(140px);
+  }
+
+  .host-fog__blob--c {
+    bottom: 4%;
+    left: 22%;
+    width: min(50vw, 440px);
+    height: min(50vw, 440px);
+    background: rgba(36, 28, 24, 0.12);
+    filter: blur(110px);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .about-structure__glow--a {
+    will-change: transform, opacity;
+    animation: about-glow-breathe-a 22s ease-in-out infinite alternate;
+  }
+
+  .about-structure__glow--b {
+    will-change: transform, opacity;
+    animation: about-glow-breathe-b 26s ease-in-out infinite alternate;
+  }
+
+  .host-fog__blob--a {
+    will-change: transform;
+    animation: host-fog-drift-a 26s ease-in-out infinite alternate;
+  }
+
+  .host-fog__blob--b {
+    will-change: transform;
+    animation: host-fog-drift-b 32s ease-in-out infinite alternate;
+  }
+
+  .host-fog__blob--c {
+    will-change: transform;
+    animation: host-fog-drift-c 22s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes about-glow-breathe-a {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.7;
+  }
+  to {
+    transform: translate3d(4%, 5%, 0) scale(1.08);
+    opacity: 1;
+  }
+}
+
+@keyframes about-glow-breathe-b {
+  from {
+    transform: translate3d(0, 0, 0) scale(1.02);
+    opacity: 0.75;
+  }
+  to {
+    transform: translate3d(-5%, -3%, 0) scale(0.94);
+    opacity: 0.95;
+  }
+}
+
+@keyframes host-fog-drift-a {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(6%, 8%, 0) scale(1.08);
+  }
+}
+
+@keyframes host-fog-drift-b {
+  from {
+    transform: translate3d(0, 0, 0) scale(1.02);
+  }
+  to {
+    transform: translate3d(-7%, 5%, 0) scale(0.94);
+  }
+}
+
+@keyframes host-fog-drift-c {
+  from {
+    transform: translate3d(0, 0, 0) scale(0.98);
+  }
+  to {
+    transform: translate3d(5%, -6%, 0) scale(1.06);
+  }
 }
