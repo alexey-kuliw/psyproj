@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OG Image Generator — oleksiikulish.com</title>
+  <meta name="robots" content="noindex, nofollow" />
+
+  <style>
+    /* Inter — same local files as the site (latin + cyrillic) */
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-display: swap;
+      font-weight: 400;
+      src: url('assets/fonts/inter-cyrillic-400-normal.woff2') format('woff2');
+      unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-display: swap;
+      font-weight: 400;
+      src: url('assets/fonts/inter-latin-400-normal.woff2') format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-display: swap;
+      font-weight: 500;
+      src: url('assets/fonts/inter-cyrillic-500-normal.woff2') format('woff2');
+      unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-display: swap;
+      font-weight: 500;
+      src: url('assets/fonts/inter-latin-500-normal.woff2') format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-display: swap;
+      font-weight: 600;
+      src: url('assets/fonts/inter-cyrillic-600-normal.woff2') format('woff2');
+      unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+    }
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-display: swap;
+      font-weight: 600;
+      src: url('assets/fonts/inter-latin-600-normal.woff2') format('woff2');
+      unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+    }
+
+    :root {
+      --graphite-950: #0b0d10;
+      --graphite-900: #12151a;
+      --graphite-800: #1a1f27;
+      --steel-100: #d7dde6;
+      --steel-300: #8f9baf;
+      --steel-400: #6b788c;
+      --slate-line: rgba(148, 163, 184, 0.07);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      font-family: Inter, system-ui, sans-serif;
+      background: #2a2f38;
+      color: var(--steel-100);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .instructions {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 28px 24px 20px;
+      font-size: 13px;
+      line-height: 1.55;
+      color: #c5ccd6;
+    }
+
+    .instructions strong {
+      color: #f0f2f5;
+      font-weight: 600;
+    }
+
+    .instructions code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 12px;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 4px;
+      padding: 1px 6px;
+    }
+
+    .instructions ol {
+      margin: 10px 0 0 1.2em;
+    }
+
+    .instructions li + li {
+      margin-top: 4px;
+    }
+
+    .stage {
+      display: flex;
+      justify-content: center;
+      padding: 8px 24px 48px;
+    }
+
+    /* Exact OG artboard */
+    #og-card {
+      width: 1200px;
+      height: 630px;
+      overflow: hidden;
+      position: relative;
+      background: var(--graphite-900);
+      flex-shrink: 0;
+    }
+
+    /* Soft ambient structure behind content */
+    .og-atmosphere {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .og-atmosphere__glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+    }
+
+    .og-atmosphere__glow--a {
+      top: -8%;
+      left: 6%;
+      width: 520px;
+      height: 520px;
+      background: radial-gradient(circle, rgba(148, 163, 184, 0.09) 0%, transparent 68%);
+    }
+
+    .og-atmosphere__glow--b {
+      bottom: -18%;
+      right: 28%;
+      width: 460px;
+      height: 460px;
+      background: radial-gradient(circle, rgba(36, 43, 53, 0.45) 0%, transparent 70%);
+    }
+
+    .og-atmosphere__grid {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.9;
+      -webkit-mask-image: linear-gradient(to right, black 0%, black 58%, transparent 92%);
+      mask-image: linear-gradient(to right, black 0%, black 58%, transparent 92%);
+    }
+
+    .og-safe {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      width: 100%;
+      height: 100%;
+      padding: 56px 64px;
+    }
+
+    .og-copy {
+      width: 62%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding-right: 36px;
+    }
+
+    .og-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .og-brand img {
+      width: 36px;
+      height: 36px;
+      display: block;
+      border-radius: 10px;
+    }
+
+    .og-brand span {
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--steel-400);
+    }
+
+    .og-headline {
+      margin-top: 28px;
+      font-size: 42px;
+      font-weight: 600;
+      line-height: 1.18;
+      letter-spacing: -0.025em;
+      color: var(--steel-100);
+      max-width: 620px;
+    }
+
+    .og-sub {
+      margin-top: auto;
+      padding-top: 28px;
+      font-size: 19px;
+      font-weight: 400;
+      line-height: 1.45;
+      color: var(--steel-300);
+      max-width: 520px;
+    }
+
+    .og-meta {
+      margin-top: 14px;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--steel-400);
+    }
+
+    .og-portrait {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 42%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .og-portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 18%;
+      display: block;
+      -webkit-mask-image:
+        linear-gradient(to right, transparent 0%, black 28%, black 100%),
+        linear-gradient(to top, transparent 0%, black 18%, black 100%);
+      -webkit-mask-composite: source-in;
+      mask-image:
+        linear-gradient(to right, transparent 0%, black 28%, black 100%),
+        linear-gradient(to top, transparent 0%, black 18%, black 100%);
+      mask-composite: intersect;
+    }
+
+    /* Soft vignette so portrait never forms a hard edge */
+    .og-portrait::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to right, var(--graphite-900) 0%, transparent 34%),
+        linear-gradient(to top, var(--graphite-900) 0%, transparent 22%);
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="instructions">
+    <strong>Export Open Graph image (1200×630)</strong>
+    <ol>
+      <li>Open DevTools → Elements.</li>
+      <li>Select <code>#og-card</code> (right-click the card → Inspect).</li>
+      <li>In the Elements panel, right-click the <code>#og-card</code> node → <strong>Capture node screenshot</strong>.</li>
+      <li>Save as <code>og-image.jpg</code> or <code>og-image.png</code> in the project root (Chrome captures at device pixel ratio — use 100% zoom for exact 1200×630, or keep 2× for a sharper asset).</li>
+    </ol>
+  </div>
+
+  <div class="stage">
+    <div id="og-card">
+      <div class="og-atmosphere" aria-hidden="true">
+        <div class="og-atmosphere__glow og-atmosphere__glow--a"></div>
+        <div class="og-atmosphere__glow og-atmosphere__glow--b"></div>
+        <svg class="og-atmosphere__grid" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" preserveAspectRatio="none">
+          <defs>
+            <pattern id="og-arch-grid" width="72" height="72" patternUnits="userSpaceOnUse">
+              <path d="M72 0H0V72" fill="none" stroke="rgba(148,163,184,0.07)" stroke-width="1" />
+              <path d="M0 0h6M0 0v6" fill="none" stroke="rgba(148,163,184,0.12)" stroke-width="1" stroke-linecap="square" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#og-arch-grid)" />
+        </svg>
+      </div>
+
+      <div class="og-portrait" aria-hidden="true">
+        <img src="assets/img/me.jpg" alt="" width="600" height="800" />
+      </div>
+
+      <div class="og-safe">
+        <div class="og-copy">
+          <div>
+            <div class="og-brand">
+              <img src="assets/fav/favicon.svg" alt="" width="36" height="36" />
+              <span>oleksiikulish.com</span>
+            </div>
+            <h1 class="og-headline">Будувати життя наново легше, коли ти не один.</h1>
+          </div>
+
+          <div>
+            <p class="og-sub">
+              Закрита онлайн-група підтримки для чоловіків в еміграції.
+            </p>
+            <p class="og-meta">Олексій Куліш · Психолог, психотерапевт</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
